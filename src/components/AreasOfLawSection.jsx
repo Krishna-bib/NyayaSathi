@@ -1,0 +1,89 @@
+import React from 'react';
+
+const AreasOfLawSection = () => {
+  const lawDomains = [
+    {
+      title: 'Constitutional Law',
+      topics: ['Fundamental Rights and Freedoms', 'Judicial Review', 'Constitutional Amendments', 'Separation of Powers']
+    },
+    {
+      title: 'Criminal Law',
+      topics: ['IPC Offenses', 'Criminal Procedure', 'Bail and Custody', 'Investigation and Trial']
+    },
+    {
+      title: 'Civil Law',
+      topics: ['Contract Disputes', 'Property Disputes', 'Tort Law', 'Civil Procedure Code']
+    },
+    {
+      title: 'Family Law',
+      topics: ['Marriage and Divorce', 'Child Custody', 'Maintenance and Alimony', 'Succession and Inheritance']
+    },
+    {
+      title: 'Labour and Employment Law',
+      topics: ['Employment Contracts', 'Workplace Rights', 'Industrial Disputes', 'Social Security Benefits']
+    },
+    {
+      title: 'Intellectual Property Law',
+      topics: ['Patents and Trademarks', 'Copyright Protection', 'Trade Secrets', 'IP Litigation']
+    },
+    {
+      title: 'Commercial and Business Law',
+      topics: ['Business Transactions', 'Corporate Governance', 'Banking Regulations', 'Competition Law']
+    },
+    {
+      title: 'Tax Law',
+      topics: ['Income Tax', 'Goods and Services Tax (GST)', 'Corporate Tax', 'Tax Disputes and Appeals']
+    },
+    {
+      title: 'Real Estate and RERA',
+      topics: ['Property Registration', 'RERA Compliance', 'Landlord-Tenant Disputes', 'Property Disputes']
+    },
+    {
+      title: 'Consumer Protection Law',
+      topics: ['Consumer Rights', 'Product Liability', 'Consumer Forums', 'Service Deficiency']
+    },
+    {
+      title: 'Banking and Finance Law',
+      topics: ['Loan Agreements', 'Debt Recovery', 'Banking Fraud', 'Financial Regulations']
+    },
+    {
+      title: 'Environmental Law',
+      topics: ['Pollution Control', 'Environmental Clearances', 'Wildlife Protection', 'Climate Regulations']
+    },
+    {
+      title: 'Administrative Law',
+      topics: ['Government Actions', 'Administrative Tribunals', 'Public Service Rules', 'Judicial Review of Administrative Actions']
+    },
+    {
+      title: 'Cyber Law',
+      topics: ['Data Protection', 'Cyber Crimes', 'IT Act Compliance', 'Digital Transactions']
+    }
+  ];
+
+  return (
+    <section className="py-16 px-4 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          Areas of Law Covered by NyayGuru
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {lawDomains.map((domain, idx) => (
+            <div key={idx} className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">{domain.title}</h3>
+              <ul className="space-y-2">
+                {domain.topics.map((topic, topicIdx) => (
+                  <li key={topicIdx} className="flex items-start gap-2 text-sm text-gray-700">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AreasOfLawSection;
