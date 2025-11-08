@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-gray-50;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Formatted Message Styles */
+.formatted-message {
+  line-height: 1.7;
+}
+
+.formatted-message strong {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.formatted-message .numbered-item {
+  margin: 8px 0;
+  padding-left: 0;
+}
+
+.formatted-message .numbered-item strong {
+  display: inline-block;
+  min-width: 28px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.formatted-message .bullet-item {
+  margin: 6px 0;
+  padding-left: 12px;
+  text-indent: -12px;
+}
+
+.formatted-message .section-header {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 16px 0 8px 0;
+  color: #1a1a1a;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 4px;
+}
+
+.formatted-message .bold-header {
+  font-weight: 700;
+  margin: 12px 0 6px 0;
+  font-size: 1.05em;
+  color: #1a1a1a;
+}
+
+.formatted-message br {
+  display: block;
+  content: "";
+  margin: 4px 0;
+}

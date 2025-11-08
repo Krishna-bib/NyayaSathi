@@ -12,7 +12,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-800/60"></div>
       <div className="max-w-7xl mx-auto relative z-10 text-center py-16">
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-8">
-          NyayGuru
+          NyayaSathi
         </h1>
       </div>
     </section>

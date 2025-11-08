@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, Upload, Download, Maximize2, ChevronUp } from 'lucide-react';
-import { API_CONFIG, apiUrl } from '../api';
+import api from '../api';
+import FeedbackWidget from './FeedbackWidget';
+import { FormattedMessage } from '../utils/formatMessage.jsx';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hi, I'm NyayGuru. What legal advice do you need?" }
+    { role: 'assistant', content: "Hi, I'm NyayaSathi. What legal advice do you need?" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,17 +25,19 @@ const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Initialize new chat session (optional: call on mount or before first send)
+  // Initialize new chat session on component mount
+  useEffect(() => {
+    initializeChat();
+  }, []);
+
+  // Initialize new chat session
   const initializeChat = async () => {
     try {
-      // TODO: integrate backend NEW_CHAT endpoint
-      // const response = await fetch(apiUrl(API_CONFIG.ENDPOINTS.NEW_CHAT), {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' }
-      // });
-      // const data = await response.json();
-      // setChatSessionId(data.sessionId);
-      console.log('TODO: Initialize chat session');
+      const data = await api.createNewChat();
+      if (data.success) {
+        setChatSessionId(data.sessionId);
+        console.log('Chat session initialized:', data.sessionId);
+      }
     } catch (error) {
       console.error('Error initializing chat:', error);
     }
@@ -49,29 +53,27 @@ const ChatInterface = () => {
     setIsLoading(true);
 
     try {
-      // TODO: integrate SEND_MESSAGE
-      // const response = await fetch(apiUrl(API_CONFIG.ENDPOINTS.SEND_MESSAGE), {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ message: userMessage, sessionId: chatSessionId })
-      // });
-      // const data = await response.json();
-      // setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
-
-      // Demo response (remove when API is integrated)
-      setTimeout(() => {
+      const data = await api.sendMessage(chatSessionId, userMessage);
+      
+      if (data.success) {
         setMessages(prev => [...prev, { 
           role: 'assistant', 
-          content: 'Thank you for your query. Please integrate the API endpoint to connect to the NyayGuru AI backend for detailed legal information.' 
+          content: data.response 
         }]);
-        setIsLoading(false);
-      }, 1500);
+        // Update session ID if it was created during message send
+        if (data.sessionId && !chatSessionId) {
+          setChatSessionId(data.sessionId);
+        }
+      } else {
+        throw new Error(data.error || 'Failed to get response');
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: 'Sorry, there was an error processing your request. Please try again.' 
       }]);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -109,19 +111,40 @@ const ChatInterface = () => {
     }
   };
 
-  // Download chat as TXT (client-side). Server-side option is in API_CONFIG.
+  // Download chat as TXT from backend
   const handleDownloadTXT = async () => {
     try {
-      const text = messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');
-      const blob = new Blob([text], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `nyayguru-chat-${Date.now()}.txt`;
-      a.click();
+      if (chatSessionId) {
+        // Download from backend
+        const text = await api.exportChat(chatSessionId);
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `nyayasathi-chat-${chatSessionId}.txt`;
+        a.click();
+      } else {
+        // Fallback: client-side download
+        const text = messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `nyayasathi-chat-${Date.now()}.txt`;
+        a.click();
+      }
     } catch (error) {
       console.error('Error downloading TXT:', error);
+      alert('Error downloading chat. Please try again.');
     }
+  };
+
+  // Start new chat
+  const handleNewChat = () => {
+    setMessages([
+      { role: 'assistant', content: "Hi, I'm NyayaSathi. What legal advice do you need?" }
+    ]);
+    initializeChat();
   };
 
   return (
@@ -151,16 +174,21 @@ const ChatInterface = () => {
           {messages.map((msg, idx) => (
             <div key={idx} className={`mb-4 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
               <div
-                className={`inline-block px-6 py-3 rounded-2xl max-w-xl ${
+                className={`inline-block px-6 py-3 rounded-2xl max-w-2xl ${
                   msg.role === 'user' 
                     ? 'bg-white text-gray-900 rounded-br-sm' 
                     : 'rounded-bl-sm text-gray-900'
                 }`}
                 style={{ 
-                  backgroundColor: msg.role === 'assistant' ? '#E8C794' : undefined 
+                  backgroundColor: msg.role === 'assistant' ? '#E8C794' : undefined,
+                  textAlign: msg.role === 'assistant' ? 'left' : 'inherit'
                 }}
               >
-                {msg.content}
+                {msg.role === 'assistant' ? (
+                  <FormattedMessage content={msg.content} />
+                ) : (
+                  msg.content
+                )}
               </div>
             </div>
           ))}
@@ -218,6 +246,11 @@ const ChatInterface = () => {
           </div>
         </div>
       </div>
+
+      {/* Feedback Widget */}
+      {chatSessionId && messages.length > 2 && (
+        <FeedbackWidget sessionId={chatSessionId} />
+      )}
     </div>
   );
 };

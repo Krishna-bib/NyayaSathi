@@ -7,7 +7,7 @@ const Footer = () => {
         {/* Disclaimer */}
         <div className="mb-8 p-6 rounded-lg bg-gray-800">
           <p className="text-sm leading-relaxed">
-            <strong className="text-yellow-400">Disclaimer:</strong> NyayGuru is an AI-driven platform designed to provide general legal information. The responses generated do not constitute legal advice and are not a substitute for professional legal consultation. For specific legal matters, please consult a qualified lawyer.
+            <strong className="text-yellow-400">Disclaimer:</strong> NyayaSathi is an AI-driven platform designed to provide general legal information. The responses generated do not constitute legal advice and are not a substitute for professional legal consultation. For specific legal matters, please consult a qualified lawyer.
           </p>
         </div>
 
@@ -22,7 +22,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p className="text-center text-sm text-gray-400">
-          © 2025 NyayGuru. All rights reserved.
+          © 2025 NyayaSathi. All rights reserved.
         </p>
       </div>
     </footer>
