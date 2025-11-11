@@ -2,18 +2,19 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section 
-      className="pt-20 pb-12 px-4 relative bg-cover bg-center"
-      style={{
-        backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"1920\" height=\"400\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cdefs%3E%3ClinearGradient id=\"grad\" x1=\"0%25\" y1=\"0%25\" x2=\"100%25\" y2=\"100%25\"%3E%3Cstop offset=\"0%25\" style=\"stop-color:rgb(101,84,60);stop-opacity:1\" /%3E%3Cstop offset=\"100%25\" style=\"stop-color:rgb(70,58,42);stop-opacity:1\" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=\"1920\" height=\"400\" fill=\"url(%23grad)\" /%3E%3C/svg%3E')",
-        minHeight: '400px'
-      }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-800/60"></div>
-      <div className="max-w-7xl mx-auto relative z-10 text-center py-16">
-        <h1 className="text-5xl md:text-6xl font-bold text-white mb-8">
-          NyayaSathi
+    <section id="home" className="pt-16 pb-12 px-4 bg-gradient-to-br from-indigo-600 to-indigo-800">
+      <div className="max-w-7xl mx-auto text-center py-20">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          Welcome to NyayaSathi
         </h1>
+        
+        <p className="text-xl md:text-2xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+          AI-Powered Legal Assistance for Indian Law
+        </p>
+
+        <p className="text-lg text-indigo-200 max-w-2xl mx-auto">
+          Get instant, reliable legal information and guidance on Indian law matters, completely free of charge
+        </p>
       </div>
     </section>
   );

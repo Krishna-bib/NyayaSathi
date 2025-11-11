@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, Upload, Download, Maximize2, ChevronUp } from 'lucide-react';
+import { Plus, Upload, Download, Maximize2, ChevronUp } from 'lucide-react';
 import api from '../api';
 import FeedbackWidget from './FeedbackWidget';
 import { FormattedMessage } from '../utils/formatMessage.jsx';
@@ -148,57 +148,63 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pb-8">
+    <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
         {/* Chat Header */}
-        <div className="px-4 py-3 flex justify-between items-center" style={{ backgroundColor: '#E8C794' }}>
-          <button className="p-1.5 hover:bg-black/10 rounded transition-colors">
-            <Menu className="w-5 h-5 text-gray-700" />
-          </button>
+        <div className="px-6 py-4 bg-gradient-to-r from-indigo-600 to-indigo-700 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={handleNewChat}
+              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
+              title="New Chat"
+            >
+              <Plus className="w-6 h-6 text-white" strokeWidth={2.5} />
+            </button>
+            <div>
+              <h3 className="text-white font-semibold text-lg">Chat with NyayaSathi</h3>
+              <p className="text-indigo-200 text-xs">AI Legal Assistant</p>
+            </div>
+          </div>
           <div className="flex items-center gap-2">
             <button 
               onClick={handleDownloadTXT}
-              className="p-1.5 hover:bg-black/10 rounded transition-colors"
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
               title="Download Chat"
             >
-              <Download className="w-5 h-5 text-gray-700" />
-            </button>
-            <button className="p-1.5 hover:bg-black/10 rounded transition-colors" title="Fullscreen">
-              <Maximize2 className="w-5 h-5 text-gray-700" />
+              <Download className="w-5 h-5 text-white" />
             </button>
           </div>
         </div>
 
         {/* Messages Area */}
-        <div className="bg-black h-96 overflow-y-auto p-6" ref={messagesContainerRef}>
+        <div className="bg-gray-50 h-[500px] overflow-y-auto p-6" ref={messagesContainerRef}>
           {messages.map((msg, idx) => (
-            <div key={idx} className={`mb-4 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+            <div key={idx} className={`mb-6 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
               <div
-                className={`inline-block px-6 py-3 rounded-2xl max-w-2xl ${
+                className={`inline-block px-5 py-4 rounded-lg max-w-2xl shadow-sm ${
                   msg.role === 'user' 
-                    ? 'bg-white text-gray-900 rounded-br-sm' 
-                    : 'rounded-bl-sm text-gray-900'
+                    ? 'bg-indigo-600 text-white' 
+                    : 'bg-white text-gray-800 border border-gray-200'
                 }`}
                 style={{ 
-                  backgroundColor: msg.role === 'assistant' ? '#E8C794' : undefined,
                   textAlign: msg.role === 'assistant' ? 'left' : 'inherit'
                 }}
               >
                 {msg.role === 'assistant' ? (
                   <FormattedMessage content={msg.content} />
                 ) : (
-                  msg.content
+                  <span className="font-medium">{msg.content}</span>
                 )}
               </div>
             </div>
           ))}
           {isLoading && (
-            <div className="text-left mb-4">
-              <div className="inline-block px-6 py-3 rounded-2xl rounded-bl-sm" style={{ backgroundColor: '#E8C794' }}>
+            <div className="text-left mb-6">
+              <div className="inline-block px-5 py-4 rounded-lg bg-white shadow-sm border border-gray-200">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-gray-700 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-gray-700 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-gray-700 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-2.5 h-2.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2.5 h-2.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2.5 h-2.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               </div>
             </div>
@@ -206,26 +212,24 @@ const ChatInterface = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-gray-50 border-t border-gray-200">
+        <div className="p-6 bg-white border-t border-gray-200">
           <div className="relative">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSend()}
-              placeholder="Type your message..."
+              placeholder="Ask your legal question..."
               disabled={isLoading}
-              className="w-full px-4 py-3 pr-24 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:opacity-50 text-gray-700"
-              style={{ backgroundColor: '#F5EFE6' }}
+              className="w-full px-6 py-4 pr-28 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 text-gray-700 bg-white"
             />
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
-                style={{ backgroundColor: '#A68B5B' }}
+                className="w-10 h-10 rounded-lg bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 title="Upload PDF"
               >
-                <Upload className="w-5 h-5 text-white" />
+                <Upload className="w-5 h-5 text-gray-700" />
               </button>
               <input 
                 ref={fileInputRef}
@@ -237,8 +241,7 @@ const ChatInterface = () => {
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-                style={{ backgroundColor: '#A68B5B' }}
+                className="w-10 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 flex items-center justify-center transition-colors disabled:opacity-50"
               >
                 <ChevronUp className="w-5 h-5 text-white" />
               </button>

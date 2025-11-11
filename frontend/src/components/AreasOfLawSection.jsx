@@ -52,7 +52,7 @@ const AreasOfLawSection = () => {
     },
     {
       title: 'Administrative Law',
-      topics: ['Government Actions', 'Administrative Tribunals', 'Public Service Rules', 'Judicial Review of Administrative Actions']
+      topics: ['Government Actions', 'Administrative Tribunals', 'Public Service Rules', 'Judicial Review']
     },
     {
       title: 'Cyber Law',
@@ -61,20 +61,29 @@ const AreasOfLawSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-16 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-          Areas of Law Covered by NyayaSathi
-        </h2>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Areas of Law Covered
+          </h2>
+          <p className="text-lg text-gray-600">
+            Comprehensive coverage across all major domains of Indian law
+          </p>
+        </div>
+        
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {lawDomains.map((domain, idx) => (
-            <div key={idx} className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">{domain.title}</h3>
-              <ul className="space-y-2">
+            <div 
+              key={idx} 
+              className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+            >
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{domain.title}</h3>
+              <ul className="space-y-2.5">
                 {domain.topics.map((topic, topicIdx) => (
-                  <li key={topicIdx} className="flex items-start gap-2 text-sm text-gray-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                    <span>{topic}</span>
+                  <li key={topicIdx} className="flex items-start gap-2.5 text-sm text-gray-600">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0" />
+                    <span className="leading-snug">{topic}</span>
                   </li>
                 ))}
               </ul>

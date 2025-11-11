@@ -1,5 +1,4 @@
 import React from 'react';
-import { MessageCircle } from 'lucide-react';
 
 const ExampleQueriesSection = () => {
   const queries = [
@@ -20,18 +19,23 @@ const ExampleQueriesSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4 bg-white border-t border-gray-200">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-          Types of Legal Queries NyayaSathi Can Answer
-        </h2>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Example Legal Queries
+          </h2>
+          <p className="text-lg text-gray-600">
+            See what you can ask NyayaSathi
+          </p>
+        </div>
+        
         <div className="grid sm:grid-cols-2 gap-4">
           {queries.map((query, idx) => (
             <div
               key={idx}
-              className="bg-white p-4 rounded-lg border border-gray-200 flex items-start gap-3 hover:shadow-md transition-shadow"
+              className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:border-indigo-300 hover:shadow-sm transition-all"
             >
-              <MessageCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-gray-600" />
               <p className="text-sm text-gray-700">{query}</p>
             </div>
           ))}
