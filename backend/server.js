@@ -19,7 +19,11 @@ connectDB();
 
 // Middleware
 const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [process.env.FRONTEND_URL, 'https://your-frontend-url.vercel.app']
+  ? [
+      process.env.FRONTEND_URL, 
+      'https://nyaya-sathi-mocha.vercel.app',
+      /https:\/\/nyaya-sathi-.*\.vercel\.app$/ // Allow all Vercel preview deployments
+    ]
   : ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173'];
 
 app.use(cors({
@@ -27,9 +31,21 @@ app.use(cors({
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.some(allowed => origin.startsWith(allowed.replace('*', '')))) {
+    // Check if origin matches any allowed origin (string or regex)
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (typeof allowed === 'string') {
+        return origin === allowed;
+      }
+      if (allowed instanceof RegExp) {
+        return allowed.test(origin);
+      }
+      return false;
+    });
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
