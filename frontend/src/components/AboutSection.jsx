@@ -78,16 +78,6 @@ const AboutSection = () => {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">The Team Behind NyayaSathi</h3>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            NyayaSathi was conceptualized by <strong>Adv (Dr.) Vibhuti Bhushan Sharma</strong>, a distinguished legal professional with a vision to make legal services accessible to all Indians. Recognizing the challenges faced by common citizens in understanding and accessing legal information, Dr. Sharma envisioned an AI-powered platform that could serve as a legal companion for everyone.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            The platform is developed, trained, and maintained by <strong>Brainwave Technologies</strong>, a team of AI specialists and legal technology experts. Through continuous refinement and updates, we ensure NyayaSathi remains accurate, reliable, and aligned with the latest developments in Indian law.
-          </p>
-        </div>
-
         <div className="mt-12 bg-indigo-50 border border-indigo-200 rounded-lg p-8">
           <h3 className="text-xl font-bold text-gray-900 mb-4">Important Notice</h3>
           <p className="text-gray-700 leading-relaxed">

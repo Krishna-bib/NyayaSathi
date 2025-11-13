@@ -6,32 +6,32 @@ export const formatMessage = (content) => {
   
   let formatted = content;
   
-  // First, split by double line breaks to preserve sections
+  // Split by double line breaks but we'll reduce spacing
   const sections = formatted.split('\n\n');
   
   formatted = sections.map(section => {
     let sectionFormatted = section;
     
-    // Convert **bold text** to <strong> (handle multi-line bold)
+    // Convert **bold text** to <strong>
     sectionFormatted = sectionFormatted.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-gray-900 font-semibold">$1</strong>');
     
     // Convert numbered section headers like "**1. Title:**" or "**1. Title**"
     sectionFormatted = sectionFormatted.replace(/^(\d+)\.\s*(.+?)$/gm, 
-      '<div class="section-header mt-4 mb-2"><strong class="text-lg font-bold text-gray-900">$1. $2</strong></div>');
+      '<div class="section-header mt-3 mb-1.5"><strong class="text-lg font-bold text-gray-900">$1. $2</strong></div>');
     
-    // Convert bullet points (•, -, *) at start of line
+    // Convert bullet points (•, -, *) at start of line - reduced spacing
     sectionFormatted = sectionFormatted.replace(/^[•\-\*]\s+(.+)$/gm, 
-      '<div class="bullet-item ml-4 my-1 flex items-start"><span class="mr-2">•</span><span class="flex-1">$1</span></div>');
+      '<div class="bullet-item ml-4 my-0.5 flex items-start"><span class="mr-2">•</span><span class="flex-1">$1</span></div>');
     
     // Convert ### Headers
     sectionFormatted = sectionFormatted.replace(/^###\s+(.+)$/gm, 
-      '<div class="section-header mt-3 mb-2 text-lg font-bold text-gray-900">$1</div>');
+      '<div class="section-header mt-2.5 mb-1.5 text-lg font-bold text-gray-900">$1</div>');
     
     // Handle single line breaks within sections
     sectionFormatted = sectionFormatted.replace(/\n/g, '<br>');
     
     return sectionFormatted;
-  }).join('<div class="section-break my-4"></div>');
+  }).join('<div class="section-break my-2.5"></div>');
   
   return formatted;
 };
@@ -45,7 +45,7 @@ export const FormattedMessage = ({ content }) => {
       className="formatted-message text-gray-800"
       dangerouslySetInnerHTML={{ __html: formattedContent }}
       style={{
-        lineHeight: '1.8',
+        lineHeight: '1.6',
         fontSize: '0.95rem',
       }}
     />
